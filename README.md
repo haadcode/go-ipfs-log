@@ -1,0 +1,3 @@
+# go-ipfs-log
+
+Learning Go...
