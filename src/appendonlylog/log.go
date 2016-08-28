@@ -48,6 +48,16 @@ func (l *AppendOnlyLog) Join(other *AppendOnlyLog) *AppendOnlyLog {
   items := l.Items()
   s := other.Items()
 
+  // TODO:
+  // 1) add _currentBatch for tracking "local entries while offline"
+  // 2) follow JS impl:
+  //    const diff   = differenceWith(other.items, this.items, Entry.equals)
+  //    // TODO: need deterministic sorting of the union
+  //    const final  = unionWith(this._currentBatch, diff, Entry.equals)
+  //    this._items  = this._items.concat(final)
+  // 3) fetch history (ie. entries that are not in local log)
+  // 4) add support for multiple heads, implement find and update heads logic
+
   for i := len(s) - 1; i >= 0; i-- {
     if (!contains(items, s[i])) {
       l.items.PushFront(s[i])
