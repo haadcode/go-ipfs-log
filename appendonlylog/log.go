@@ -45,6 +45,8 @@ func (l *AppendOnlyLog) Add(data []byte) *Entry {
 }
 
 func (l *AppendOnlyLog) Join(other *AppendOnlyLog) *AppendOnlyLog {
+  var res = New(l.Id, l.db)
+
   items := l.Items()
   s := other.Items()
 
@@ -58,13 +60,17 @@ func (l *AppendOnlyLog) Join(other *AppendOnlyLog) *AppendOnlyLog {
   // 3) fetch history (ie. entries that are not in local log)
   // 4) add support for multiple heads, implement find and update heads logic
 
+  for i := len(items) - 1; i >= 0; i-- {
+    res.items.PushBack(items[i])
+  }
+
   for i := len(s) - 1; i >= 0; i-- {
     if (!contains(items, s[i])) {
-      l.items.PushBack(s[i])
+      res.items.PushBack(s[i])
     }
   }
 
-  return l
+  return res
 }
 
 func contains(s []*Entry, e *Entry) bool {
