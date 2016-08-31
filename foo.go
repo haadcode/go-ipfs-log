@@ -2,12 +2,15 @@ package main
 
 import (
   "log"
-  "appendonlylog"
-  db "immutabledb/ipfs"
+  "github.com/haadcode/go-ipfs-log/appendonlylog"
+  db "github.com/haadcode/go-ipfs-log/immutabledb/ipfs"
 )
 
-var log1 = appendonlylog.New("abc", db.ImmutableIPFS{})
-var log2 = appendonlylog.New("def", db.ImmutableIPFS{})
+var dataDirectory = "/tmp/go-ipfs-log-dev"
+var ipfsdb = db.Open(dataDirectory)
+
+var log1 = appendonlylog.New("abc", ipfsdb)
+var log2 = appendonlylog.New("def", ipfsdb)
 
 func printLog(l *appendonlylog.AppendOnlyLog) {
   log.Println()

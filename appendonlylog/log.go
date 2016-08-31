@@ -3,7 +3,7 @@ package appendonlylog
 import (
   "log"
   "container/list"
-  "immutabledb/interface"
+  "github.com/haadcode/go-ipfs-log/immutabledb/interface"
 )
 
 type AppendOnlyLog struct {
