@@ -3,6 +3,6 @@
 Learning Go...
 
 ```
-go build foo.go
-./foo
+go build 
+./go-ipfs-log
 ```

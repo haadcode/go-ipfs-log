@@ -48,4 +48,6 @@ func main() {
   log2.Add([]byte("777"))
   log4 := log3.Join(log2)
   printLog(log4)
+
+  ipfsdb.Close()
 }

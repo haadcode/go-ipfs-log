@@ -1,4 +1,4 @@
-package ipfs
+package immutabledb
 
 import (
     "log"
@@ -42,7 +42,9 @@ func Open(path string) ImmutableIPFS {
 }
 
 func (db ImmutableIPFS) Close() error {
-
+  db.Repo.Close()
+  db.Node.Close()
+  return nil
 }
 
 func (db ImmutableIPFS) Put(data []byte) string {

@@ -27,7 +27,7 @@ func (l *AppendOnlyLog) Add(data []byte) *Entry {
   hash := l.db.Put(data)
 
   var next []*Entry
-  n := l.items.Front()
+  n := l.items.Back()
 
   if n != nil {
     next = []*Entry{n.Value.(*Entry)}
@@ -39,7 +39,7 @@ func (l *AppendOnlyLog) Add(data []byte) *Entry {
     Next: next,
   }
 
-  l.items.PushFront(e)
+  l.items.PushBack(e)
 
   return e
 }
@@ -60,7 +60,7 @@ func (l *AppendOnlyLog) Join(other *AppendOnlyLog) *AppendOnlyLog {
 
   for i := len(s) - 1; i >= 0; i-- {
     if (!contains(items, s[i])) {
-      l.items.PushFront(s[i])
+      l.items.PushBack(s[i])
     }
   }
 
@@ -77,7 +77,7 @@ func contains(s []*Entry, e *Entry) bool {
 }
 
 func (l *AppendOnlyLog) Head() *Entry {
-  head := l.items.Front().Value.(*Entry)
+  head := l.items.Back().Value.(*Entry)
   return head
 }
 
